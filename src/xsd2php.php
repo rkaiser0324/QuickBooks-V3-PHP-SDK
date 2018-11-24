@@ -2,7 +2,7 @@
 
 require('./config.php');
 
-use QuickBooksOnline\API\XSD2PHP\src\com\mikebevz\xsd2php\Xsd2Php;
+use com\mikebevz\xsd2php\Xsd2Php;
 
 function replace_string_in_file($filename, $string_to_replace, $replace_with){
     $content=file_get_contents($filename);
@@ -17,7 +17,7 @@ $xml->saveClasses('./Data', true);
 foreach (scandir('./Data') as $file) {
     if ('.' === $file) continue;
     if ('..' === $file) continue;
-    
+
     replace_string_in_file('./Data/' . $file, '@var \IPP', '@var IPP');
     replace_string_in_file('./Data/' . $file, '@var IntuitObject', '@var IPPIntuitEntity');
     replace_string_in_file('./Data/' . $file, '@var id', '@var string');
