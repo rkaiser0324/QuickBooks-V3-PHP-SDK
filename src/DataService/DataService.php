@@ -36,7 +36,7 @@ use QuickBooksOnline\API\Exception\IdsExceptionManager;
 use QuickBooksOnline\API\Exception\SdkException;
 use QuickBooksOnline\API\Diagnostics\TraceLevel;
 use QuickBooksOnline\API\Diagnostics\ContentWriter;
-use QuickBooksOnline\API\XSD2PHP\src\com\mikebevz\xsd2php\Php2Xml;
+use com\mikebevz\xsd2php\Php2Xml;
 use QuickBooksOnline\API\Core\OAuth\OAuth2\OAuth2LoginHelper;
 use QuickBooksOnline\API\Core\OAuth\OAuth2\OAuth2AccessToken;
 use QuickBooksOnline\API\Core\HttpClients\ClientFactory;
@@ -1289,7 +1289,7 @@ class DataService
      * update the TaxService with namespace added
      * If this class is not available on include_path or wab't loaded the method will return false
      *
-     * @deprecated 
+     * @deprecated
      * @param object $entity
      * @return bool
      */
@@ -1539,7 +1539,7 @@ class DataService
         $month = 1;
         $day = 1;
         $year = 1970;
-        
+
         extract($result);
         if (!empty($errors)) {
             throw new SdkException("SDK failed to parse date value \"$str\":"
