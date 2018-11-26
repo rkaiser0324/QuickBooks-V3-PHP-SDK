@@ -141,13 +141,28 @@ class CurlHttpClient implements HttpClientInterface{
     }
 
     /**
-     * Set the SSL certifcate path and corresponding varaibles for cURL
+     * Set the SSL certificate path and corresponding variables for cURL
+	 *
+	 * @param array $curl_opt
+	 * @param bool $verifySSL
      */
     private function setSSL(&$curl_opt, $verifySSL){
-      $tlsVersion = $this->basecURL->versionOfTLS();
-      if(strcmp($tlsVersion, "TLS 1.2") != 0){
-          throw new SdkException("Error. Checking TLS 1.2 version failed. Please make sure your PHP cURL supports TSL 1.2");
-      }
+		$curl_version = curl_version();
+		$ssl_version = $curl_version['ssl_version'];
+		if (preg_match('@^(OpenSSL|NSS)/(.+)@', $ssl_version, $matches))
+		{
+			$type = $matches[1];
+			// Strip any alpha (i.e., patch) identifier
+			$version = preg_replace('/[a-zA-Z]/', '', $matches[2]);
+
+			// See https://stackoverflow.com/a/31351605 for OpenSSL and NSS releases that support TLS 1.2
+			$supports_tls_1_2 = ($type == 'OpenSSL' && version_compare($version, '1.0.1'))
+				|| ($type == 'NSS' && version_compare($version, '3.15'));
+
+			if (!$supports_tls_1_2)
+				throw new SdkException("Error. Please make sure your PHP cURL supports TLS 1.2");
+		}
+
       if($verifySSL){
           $curl_opt[CURLOPT_SSL_VERIFYPEER] = true;
           $curl_opt[CURLOPT_SSL_VERIFYHOST] = 2;
