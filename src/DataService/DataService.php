@@ -36,12 +36,14 @@ use QuickBooksOnline\API\Exception\IdsExceptionManager;
 use QuickBooksOnline\API\Exception\SdkException;
 use QuickBooksOnline\API\Diagnostics\TraceLevel;
 use QuickBooksOnline\API\Diagnostics\ContentWriter;
-use com\mikebevz\xsd2php\Php2Xml;
 use QuickBooksOnline\API\Core\OAuth\OAuth2\OAuth2LoginHelper;
 use QuickBooksOnline\API\Core\OAuth\OAuth2\OAuth2AccessToken;
 use QuickBooksOnline\API\Core\HttpClients\ClientFactory;
 use QuickBooksOnline\API\Data\IPPCompanyInfo;
 use QuickBooksOnline\API\Data\IPPPreferences;
+
+require_once realpath(dirname(__FILE__) . '/../../vendor/autoload.php');
+use com\mikebevz\xsd2php\Php2Xml;
 
 /**
  * Class DataServicd

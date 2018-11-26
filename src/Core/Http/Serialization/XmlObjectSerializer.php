@@ -4,9 +4,11 @@ namespace QuickBooksOnline\API\Core\Http\Serialization;
 
 use QuickBooksOnline\API\Core\CoreConstants;
 use QuickBooksOnline\API\Data\IPPIntuitEntity;
+use QuickBooksOnline\API\Diagnostics\Logger;
+
+require_once realpath(dirname(__FILE__) . '/../../../../vendor/autoload.php');
 use com\mikebevz\xsd2php\Php2Xml;
 use com\mikebevz\xsd2php\Bind;
-use QuickBooksOnline\API\Diagnostics\Logger;
 
 /**
  * Xml Serialize(r) to serialize and de serialize.
@@ -93,20 +95,7 @@ class XmlObjectSerializer extends IEntitySerializer
         } else {
             throw new \Exception("Can't find corresponding CLASS for className" . $className . "during unmarshall XML into POPO Object");
 		}
-		// TODO - here's the problem
-		$xsd2php_path = dirname(__FILE__) ."/../../../../vendor/rkaiser0324/XSD-to-PHP";
-		//die(realpath(dirname(__FILE__) ."/../../../../"));
-		/*
-		require_once $xsd2php_path . "/lib/PhpFig/Ps4AutoloaderClass.php";
-		$loader = new \PhpFig\Psr4AutoloaderClass;
-		$loader->register();
-		$loader->addNamespace('com',  $xsd2php_path . 'src/com');
-		*/
 
-		require_once $xsd2php_path . "/src/com/mikebevz/xsd2php/Bind.php";
-		//require_once dirname(__FILE__) ."/../../vendor/autoload.php";
-
-		// testing
 		$x = CoreConstants::PHP_CLASS_PREFIX;
         $bind = new Bind(CoreConstants::PHP_CLASS_PREFIX);
         $bind->overrideAsSingleNamespace='http://schema.intuit.com/finance/v3';
