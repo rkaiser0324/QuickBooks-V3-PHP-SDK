@@ -38,24 +38,13 @@ class XmlObjectSerializer extends IEntitySerializer
     private static function getXmlFromObj($phpObj)
     {
         if (!$phpObj) {
-            echo "getXmlFromObj NULL arg\n";
-            var_dump(debug_backtrace());
-            return false;
+            throw new \SDKException("getXmlFromObj NULL arg");
         }
 
         $php2xml = new Php2Xml(CoreConstants::PHP_CLASS_PREFIX);
         $php2xml->overrideAsSingleNamespace='http://schema.intuit.com/finance/v3';
 
-        try {
-            return $php2xml->getXml($phpObj);
-        } catch (\Exception $e) {
-            echo "\n"."Object Dump:\n";
-            var_dump($phpObj);
-            echo "\n"."Exception Call Stack (".$e->getMessage()."):\n";
-            echo "\n"."In  (".$e->getFile().") on " . $e->getLine();
-            array_walk(debug_backtrace(), create_function('$a,$b', 'print "\t{$a[\'function\']}()\n\t".basename($a[\'file\']).":{$a[\'line\']}\n";'));
-            return false;
-        }
+        return $php2xml->getXml($phpObj);
     }
 
     /**
