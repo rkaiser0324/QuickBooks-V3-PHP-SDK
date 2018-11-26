@@ -17,7 +17,8 @@
     },
     "autoload": {
         "psr-4": {
-            "QuickBooksOnline\\API\\": "src/"
+			"QuickBooksOnline\\API\\": "src/",
+			"" : "vendor/rkaiser0324/XSD-to-PHP/src/"
         }
 	},
 	"repositories": [
