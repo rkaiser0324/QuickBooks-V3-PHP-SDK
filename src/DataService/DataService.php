@@ -764,7 +764,10 @@ class DataService
         if ($this->isJsonOnly($entity)) {
             $this->forceJsonSerializers();
         }
-        $httpsPostBody = $this->executeObjectSerializer($entity, $urlResource);
+		$httpsPostBody = $this->executeObjectSerializer($entity, $urlResource);
+
+		// Drop all namespace prefixes, as well as "IPP" prefixes
+		$httpsPostBody = preg_replace('/(IPP|ns0:|:ns0)/', '', $httpsPostBody);
 
         // Builds resource Uri
         $resourceURI = implode(CoreConstants::SLASH_CHAR, array('company', $this->serviceContext->realmId, $urlResource));
